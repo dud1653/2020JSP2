@@ -17,7 +17,7 @@ import com.lee.board.db.BoardDAO;
 import com.lee.board.db.DbCon;
 import com.lee.board.vo.BoardVO;
 // Servelt은 로직 담당, JSP는 view 담당
-@WebServlet("/")
+@WebServlet("/boardList")
 public class BoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
