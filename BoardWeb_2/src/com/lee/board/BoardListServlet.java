@@ -20,12 +20,7 @@ import com.lee.board.vo.BoardVO;
 @WebServlet("/boardList")
 public class BoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public BoardListServlet() {
-        super();
-    }
-    
-    @Override
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<BoardVO> list = BoardDAO.selBoardList();
 		request.setAttribute("data", list); // (String, Object)
@@ -39,10 +34,9 @@ public class BoardListServlet extends HttpServlet {
     	// url이 바뀐다, request객체와 response 객체가 새롭게 생성
 		rd.forward(request, response);
 	}
-	
-    @Override
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+
 	}
 
 }
