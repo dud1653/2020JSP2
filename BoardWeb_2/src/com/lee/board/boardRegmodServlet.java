@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.lee.board.common.Utils;
 import com.lee.board.db.BoardDAO;
 import com.lee.board.vo.BoardVO;
 
@@ -25,14 +26,15 @@ public class boardRegmodServlet extends HttpServlet {
 		String title = request.getParameter("title");
 		String ctnt = request.getParameter("ctnt");
 		String strI_student  = request.getParameter("i_student");
-		int i_student = Integer.parseInt(strI_student);
+		
+		// 하나하나 로그 뽑아보기
 		
 		BoardVO vo = new BoardVO();
 		vo.setTitle(title);
 		vo.setCtnt(ctnt);
-		vo.setI_student(i_student);
+		vo.setI_student(Utils.parseStringToInt(strI_student, 0));
 		
-		BoardDAO.wriBoard(vo);
+		BoardDAO.insBoard(vo);
 		response.sendRedirect("/boardList");
 	}
 

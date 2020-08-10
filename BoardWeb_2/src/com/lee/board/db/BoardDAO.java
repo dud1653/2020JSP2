@@ -16,7 +16,7 @@ public class BoardDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
-		String sql = " SELECT i_board, title, ctnt, i_student FROM t_board ORDER BY i_board ";
+		String sql = " SELECT i_board, title, ctnt, i_student FROM t_board ORDER BY i_board DESC ";
 		
 		try {
 			con = DbCon.getCon();
@@ -82,13 +82,15 @@ public class BoardDAO {
 		return vo;
 	}
 	
-	public static void wriBoard(BoardVO vo) {
+	public static void insBoard(BoardVO vo) {
 		Connection con = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null;
-		
-		
-		String sql = " INSERT INTO t_board (i_board, title, ctnt, i_student) SELECT nvl(max(i_board), 0) + 1, ?, ?, ? FROM t_board ";
+		// 한 값을 가져올 때는  resultSet이 필요없다
+		// SELECT일 때만 필요 
+
+		String sql = " INSERT INTO t_board (i_board, title, ctnt, i_student) "
+				+ " VALUES (seq_board.nextval, ?, ?, ?) "; // SEQUENCE를 만들고 사용 해야 한다.
+		// 기존의 값들을 지워서 사용하거나 가장 최대값 다음값부터 최소값을 정하고 시작
 		
 		try {
 			con = DbCon.getCon();
@@ -96,13 +98,14 @@ public class BoardDAO {
 			ps.setNString(1, vo.getTitle());
 			ps.setNString(2, vo.getCtnt());
 			ps.setInt(3, vo.getI_student()); 
+			
 			ps.executeUpdate();
-			
-			
+			// SELECT 때만 executeQuery 쓰고 나머지는 다 executeUpdate
+				
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-			DbCon.close(con, ps, rs);
+			DbCon.close(con, ps);
 		}
 	}
 }

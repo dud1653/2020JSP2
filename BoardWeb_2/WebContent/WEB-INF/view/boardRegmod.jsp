@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,11 +8,12 @@
 <title>글쓰기</title>
 </head>
 <body>
-	<form id="frm" action="/boardWrite" method = "post" onsubmit="return chk()">
+
+	<form id="frm" action="/boardWrite" method="post" onsubmit="return chk()">
 		<div><label>제목 : <input type="text" name="title" id="title"></label></div>
 		<div><label>내용 : <textarea name="ctnt" id="ctnt"></textarea> </label></div>
 		<div><label>작성자 : <input type="text" name="i_student" id="i_student"></label></div>
-		<<div><input type="submit" value="글등록"></div>
+		<div><input type="submit" value="글등록"></div>
 	</form>
 	
 	<script>

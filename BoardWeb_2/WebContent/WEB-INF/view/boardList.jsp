@@ -3,6 +3,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import= "com.lee.board.vo.BoardVO" %>
+<% request.setCharacterEncoding("UTF-8"); %>
     
 <%
 	List<BoardVO> list = (List<BoardVO>)request.getAttribute("data");
