@@ -82,7 +82,8 @@ public class BoardDAO {
 		return vo;
 	}
 	
-	public static void insBoard(BoardVO vo) {
+	public static int insBoard(BoardVO vo) {
+		int result = 0;
 		Connection con = null;
 		PreparedStatement ps = null;
 		// 한 값을 가져올 때는  resultSet이 필요없다
@@ -99,10 +100,31 @@ public class BoardDAO {
 			ps.setNString(2, vo.getCtnt());
 			ps.setInt(3, vo.getI_student()); 
 			
-			ps.executeUpdate();
+			
 			// SELECT 때만 executeQuery 쓰고 나머지는 다 executeUpdate
+			result = ps.executeUpdate();
 				
 		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DbCon.close(con, ps);
+		}
+		return result;
+	}
+	
+	public static void delBoard(BoardVO vo) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = " DELETE FROM t_board WHERE i_board = ? ";
+		
+		try {
+			con = DbCon.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, vo.getI_board());
+			
+			ps.executeUpdate();
+		}  catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			DbCon.close(con, ps);

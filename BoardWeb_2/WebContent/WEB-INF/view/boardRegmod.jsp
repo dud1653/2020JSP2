@@ -6,9 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>글쓰기</title>
+<style>
+	.err {
+		color : #e74c3c;
+	}
+</style>
 </head>
 <body>
-
+	<div class="err">${msg}</div>
 	<form id="frm" action="/boardWrite" method="post" onsubmit="return chk()">
 		<div><label>제목 : <input type="text" name="title" id="title"></label></div>
 		<div><label>내용 : <textarea name="ctnt" id="ctnt"></textarea> </label></div>

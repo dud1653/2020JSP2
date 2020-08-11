@@ -34,8 +34,14 @@ public class boardRegmodServlet extends HttpServlet {
 		vo.setCtnt(ctnt);
 		vo.setI_student(Utils.parseStringToInt(strI_student, 0));
 		
-		BoardDAO.insBoard(vo);
-		response.sendRedirect("/boardList");
+		int result = BoardDAO.insBoard(vo);
+		
+		if(result == 1) {
+			response.sendRedirect("/boardList");
+		} else {
+			request.setAttribute("msg", "에러가 발생하였습니다.");
+			doGet(request, response);
+		}
 	}
 
 }
