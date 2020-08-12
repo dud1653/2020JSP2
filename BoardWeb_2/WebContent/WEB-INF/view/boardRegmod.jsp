@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>글쓰기</title>
+<title>${data == null ? '글등록' : '글수정'}</title>
 <style>
 	.err {
 		color : #e74c3c;
@@ -13,12 +13,14 @@
 </style>
 </head>
 <body>
+	<div>${data == null ? '글등록' : '글수정'}</div>
 	<div class="err">${msg}</div>
-	<form id="frm" action="/boardWrite" method="post" onsubmit="return chk()">
-		<div><label>제목 : <input type="text" name="title" id="title"></label></div>
-		<div><label>내용 : <textarea name="ctnt" id="ctnt"></textarea> </label></div>
-		<div><label>작성자 : <input type="text" name="i_student" id="i_student"></label></div>
-		<div><input type="submit" value="글등록"></div>
+	<form id="frm" action="/${data == null ? 'boardWrite' : 'boardMod'}" method="post" onsubmit="return chk()">
+		<input type ="hidden" name="i_board" value="${data.i_board}">
+		<div><label>제목 : <input type="text" name="title" id="title" value="${data.title}"></label></div>
+		<div><label>내용 : <textarea name="ctnt" id="ctnt">${data.ctnt }</textarea> </label></div>
+		<div><label>작성자 : <input type="text" name="i_student" id="i_student" value="${data.i_student}" ${data == null ? "" : "readonly"}></label></div>
+		<div><input type="submit" value="${data == null ? '글등록' : '글수정'}"></div>
 	</form>
 	
 	<script>

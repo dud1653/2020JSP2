@@ -13,35 +13,46 @@ import com.lee.board.common.Utils;
 import com.lee.board.db.BoardDAO;
 import com.lee.board.vo.BoardVO;
 
-@WebServlet("/boardWrite")
-public class boardRegmodServlet extends HttpServlet {
+@WebServlet("/boardMod")
+public class boardModServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String strI_board = request.getParameter("i_board");
+		int i_board = Utils.parseStringToInt(strI_board, 0);
+		
+		if(i_board == 0) {
+			response.sendRedirect("/boardList");
+			return;
+		}
+		
+		BoardVO param = new BoardVO();
+		param.setI_board(i_board);
+		
+		request.setAttribute("data", BoardDAO.selBoard(param));
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/boardRegmod.jsp");
 		rd.forward(request, response);	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String strI_board = request.getParameter("i_board");
 		String title = request.getParameter("title");
 		String ctnt = request.getParameter("ctnt");
-		String strI_student  = request.getParameter("i_student");
+		String strI_student = request.getParameter("i_student");
 		
-		// 하나하나 로그 뽑아보기
+		int i_board = Integer.parseInt(strI_board);
+		int i_student = Integer.parseInt(strI_student);
 		
 		BoardVO vo = new BoardVO();
+		vo.setI_board(i_board);
 		vo.setTitle(title);
 		vo.setCtnt(ctnt);
-		vo.setI_student(Utils.parseStringToInt(strI_student, 0));
+		vo.setI_student(i_student);
 		
-		int result = BoardDAO.insBoard(vo);
+		BoardDAO.updBoard(vo);
 		
-		if(result == 1) {
-			response.sendRedirect("/boardList");
-		} else {
-			request.setAttribute("msg", "에러가 발생하였습니다.");
-			doGet(request, response);
-		}
+		response.sendRedirect("/boardDetail?i_board="+i_board);
 	}
 
 }

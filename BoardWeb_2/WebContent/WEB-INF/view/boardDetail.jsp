@@ -9,6 +9,7 @@
 </head>
 <body>
 	<div><button onclick="doDel(${data.i_board})">삭제</button></div>
+	<a href="/boardMod?i_board=${data.i_board}"><button>수정</button></a>
 	<div>상세 페이지</div>
 	<div>글번호 : ${data.i_board}</div> <!-- EL 표현식 -->
 	<div>제목 : ${data.title}</div> <!-- data : 키 값 -->
